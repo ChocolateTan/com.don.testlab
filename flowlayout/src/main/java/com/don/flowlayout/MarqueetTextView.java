@@ -9,12 +9,12 @@ import android.widget.TextView;
 /**
  * Created by don on 16/05/20.
  */
-public class TextViewGo extends TextView {
-    public TextViewGo(Context context) {
+public class MarqueetTextView extends TextView {
+    public MarqueetTextView(Context context) {
         this(context, null);
     }
 
-    public TextViewGo(Context context, AttributeSet attrs) {
+    public MarqueetTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         setFocusable(true);
@@ -25,7 +25,7 @@ public class TextViewGo extends TextView {
         setMarqueeRepeatLimit(-1);
     }
 
-    public TextViewGo(Context context, AttributeSet attrs, int defStyle) {
+    public MarqueetTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         setFocusable(true);
@@ -54,5 +54,19 @@ public class TextViewGo extends TextView {
     @Override
     public boolean isFocused() {
         return true;
+    }
+
+    /**
+     * start run
+     */
+    public void start(){
+        setSelected(true);
+    }
+
+    /**
+     * stop run
+     */
+    public void stop(){
+        setSelected(false);
     }
 }
