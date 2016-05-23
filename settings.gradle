@@ -1,1 +1,1 @@
-include ':app', ':selectmultipleimage', ':nodelist'
+include ':app', ':selectmultipleimage', ':nodelist', ':flowlayout'
