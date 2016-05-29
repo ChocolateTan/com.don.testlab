@@ -20,11 +20,6 @@
         android:layout_height="wrap_content"
         android:text="Bad NestedScrollView" />
     <Button
-        android:id="@+id/btn_nest2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Fine NestedScrollView" />
-    <Button
         android:id="@+id/btn_web"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

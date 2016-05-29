@@ -18,7 +18,6 @@
         <activity android:name=".NestedScrollViewActivity" />
         <activity android:name=".ObservableWebViewActivity"></activity>
 
-        <activity android:name=".FineNestedScrollViewActivity"></activity>
     </application>
 
 </manifest>
