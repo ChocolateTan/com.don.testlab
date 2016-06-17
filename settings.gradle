@@ -1,1 +1,1 @@
-include ':app', ':selectmultipleimage', ':nodelist', ':flowlayout', ':hidetoolbarwithwebview', ':javadelegate'
+include ':app', ':selectmultipleimage', ':nodelist', ':flowlayout', ':javadelegate', ':cameraphotosave'

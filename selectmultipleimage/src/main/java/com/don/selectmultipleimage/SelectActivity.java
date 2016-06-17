@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class SelectActivity extends AppCompatActivity {
 //                 recyclerView.setAdapter(adapter);
 
         List<String> list = getSystemPhotoList(this);
+        list.addAll(getP());
         ArrayList<ImageBean> m = new ArrayList<>();
         for(int i=list.size() - 1; i>=0; i--){
             ImageBean item = new ImageBean();
@@ -45,6 +47,8 @@ public class SelectActivity extends AppCompatActivity {
             item.setImageUrl("file://"+list.get(i));
             m.add(item);
         }
+
+        getP();
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -79,5 +83,41 @@ public class SelectActivity extends AppCompatActivity {
         }
 
         return result;
+    }
+
+    public List<String> getP() {
+        // 图片列表
+        List<String> imagePathList = new ArrayList<String>();
+        // 得到sd卡内image文件夹的路径   File.separator(/)
+//        String filePath = Environment.getExternalStorageDirectory().toString() + File.separator
+//                + "image";
+        // 得到该路径文件夹下所有的文件
+//        File fileAll = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES););
+
+        File fileAll = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File[] files = fileAll.listFiles();
+        // 将所有的文件存入ArrayList中,并过滤所有图片格式的文件
+        for (int i = 0; i < files.length; i++) {
+            File file = files[i];
+            if (checkIsImageFile(file.getPath())) {
+                imagePathList.add(file.getPath());
+            }
+        }
+        // 返回得到的图片列表
+        return imagePathList;
+    }
+
+    private boolean checkIsImageFile(String fName) {
+        boolean isImageFile = false;
+        // 获取扩展名
+        String FileEnd = fName.substring(fName.lastIndexOf(".") + 1,
+                fName.length()).toLowerCase();
+        if (FileEnd.equals("jpg") || FileEnd.equals("png") || FileEnd.equals("gif")
+                || FileEnd.equals("jpeg")|| FileEnd.equals("bmp") ) {
+            isImageFile = true;
+        } else {
+            isImageFile = false;
+        }
+        return isImageFile;
     }
 }
