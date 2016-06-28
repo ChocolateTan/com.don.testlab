@@ -39,7 +39,6 @@ public class SelectActivity extends AppCompatActivity {
 //                 recyclerView.setAdapter(adapter);
 
         List<String> list = getSystemPhotoList(this);
-        list.addAll(getP());
         ArrayList<ImageBean> m = new ArrayList<>();
         for(int i=list.size() - 1; i>=0; i--){
             ImageBean item = new ImageBean();
@@ -48,7 +47,7 @@ public class SelectActivity extends AppCompatActivity {
             m.add(item);
         }
 
-        getP();
+//        getP();
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -82,6 +81,7 @@ public class SelectActivity extends AppCompatActivity {
             }
         }
 
+        result.addAll(getP());
         return result;
     }
 
