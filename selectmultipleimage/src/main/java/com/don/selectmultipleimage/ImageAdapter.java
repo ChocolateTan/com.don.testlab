@@ -1,8 +1,12 @@
 package com.don.selectmultipleimage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.media.ExifInterface;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -25,17 +29,21 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private final Context mContext;
     private final RecyclerView mRecyclerView;
     private final GridLayoutManager mGridLayoutManager;
+    private final AppCompatActivity mAct;
     ArrayList<ImageBean> mData = new ArrayList<>();
     private DisplayImageOptions options;
     private int selectCount = 0;
 
-    public ImageAdapter(Context ctx, RecyclerView recyclerView, GridLayoutManager gridLayoutManager) {
+    public ImageAdapter(Context ctx, AppCompatActivity act, RecyclerView recyclerView, GridLayoutManager gridLayoutManager) {
         this.mContext = ctx;
+        this.mAct = act;
         this.mRecyclerView = recyclerView;
         this.mGridLayoutManager = gridLayoutManager;
 
         options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .showImageOnLoading(R.mipmap.ic_launcher)
                 .considerExifParams(true)
                 .build();
 
@@ -69,8 +77,9 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         viewHolder.ivFrame.setLayoutParams(lp2);
 
         Log.i("image degree", mData.get(position).getImageUrl() + " # " + readPictureDegree(mData.get(position).getImageName()));
-        viewHolder.ivImage.setTag(mData.get(position).getImageUrl());
+//        viewHolder.ivImage.setTag(mData.get(position).getImageUrl());
         ImageLoader.getInstance().displayImage(mData.get(position).getImageUrl(), viewHolder.ivImage, options);
+//        viewHolder.ivImage.setImageResource(R.mipmap.ic_launcher);
         if (mData.get(position).getSelected() != 0) {
 
             viewHolder.ivFrame.setVisibility(View.VISIBLE);
@@ -93,7 +102,7 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     viewHolder.ivFrame.setVisibility(View.GONE);
                     viewHolder.tvNum.setVisibility(View.GONE);
 
-//                    notifyItemChanged(position);
+                    notifyItemChanged(position);
                 } else {
                     selectCount = selectCount + 1;
                     mData.get(position).setSelected(selectCount);
@@ -101,6 +110,9 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     viewHolder.tvNum.setVisibility(View.VISIBLE);
 
                     viewHolder.tvNum.setText("" + mData.get(position).getSelected());
+//                    scaleUpAnimation(viewHolder.ivImage, mData.get(position).getImageUrl());
+                    ImageDetailActivity.launch(mAct, viewHolder.ivImage, mData.get(position).getImageUrl());
+//                    mContext.startActivity();
                 }
             }
         });
@@ -201,5 +213,20 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
 
         return list;
+    }
+
+    private void scaleUpAnimation(View view, String url) {
+        //让新的Activity从一个小的范围扩大到全屏
+        ActivityOptionsCompat options =
+                ActivityOptionsCompat.makeScaleUpAnimation(view, //The View that the new activity is animating from
+                        (int)view.getWidth()/2, (int)view.getHeight()/2, //拉伸开始的坐标
+                        0, 0);//拉伸开始的区域大小，这里用（0，0）表示从无到全屏
+        startNewAcitivity(options, url);
+    }
+
+    private void startNewAcitivity(ActivityOptionsCompat options, String url) {
+        Intent intent = new Intent(mAct,ImageDetailActivity.class);
+        intent.putExtra(ImageDetailActivity.EXTRA_IMAGE, url);
+        ActivityCompat.startActivity(mAct, intent, options.toBundle());
     }
 }

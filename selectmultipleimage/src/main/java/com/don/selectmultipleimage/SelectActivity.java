@@ -2,10 +2,13 @@ package com.don.selectmultipleimage;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -54,7 +58,7 @@ public class SelectActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3, LinearLayoutManager.VERTICAL, false);
 
         recyclerView.setLayoutManager(gridLayoutManager);
-        ImageAdapter adapter = new ImageAdapter(this, recyclerView, gridLayoutManager);
+        ImageAdapter adapter = new ImageAdapter(this, this, recyclerView, gridLayoutManager);
 //        adapter.setHasStableIds(true);
         adapter.setData(m);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -120,4 +124,6 @@ public class SelectActivity extends AppCompatActivity {
         }
         return isImageFile;
     }
+
+
 }
