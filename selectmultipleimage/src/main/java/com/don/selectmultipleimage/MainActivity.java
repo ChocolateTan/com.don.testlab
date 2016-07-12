@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         });
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .cacheOnDisk(true)
-                .cacheInMemory(false)
+                .cacheInMemory(true)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
 //                .showImageForEmptyUri(R.mipmap.photo_place_holder_image)
@@ -88,6 +88,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 permission();
+            }
+        });
+        findViewById(R.id.btn_view_image).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ImageActivity.class));
             }
         });
     }

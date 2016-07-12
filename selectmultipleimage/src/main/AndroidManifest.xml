@@ -24,6 +24,8 @@
         <activity android:name=".SelectActivity"/>
         <activity android:name=".ImageDetailActivity">
         </activity>
+        <activity android:name=".ImageActivity">
+        </activity>
     </application>
 
 </manifest>

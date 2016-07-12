@@ -111,7 +111,7 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                     viewHolder.tvNum.setText("" + mData.get(position).getSelected());
 //                    scaleUpAnimation(viewHolder.ivImage, mData.get(position).getImageUrl());
-                    ImageDetailActivity.launch(mAct, viewHolder.ivImage, mData.get(position).getImageUrl());
+//                    ImageDetailActivity.launch(mAct, viewHolder.ivImage, mData.get(position).getImageUrl());
 //                    mContext.startActivity();
                 }
             }
