@@ -1,14 +1,11 @@
-package com.don.selectmultipleimage;
+package com.don.selectmultipleimage.selectpic;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,7 +14,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
+
+import com.don.selectmultipleimage.ImageBean;
+import com.don.selectmultipleimage.R;
 
 import java.io.File;
 import java.util.ArrayList;

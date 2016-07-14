@@ -1,4 +1,4 @@
-package com.don.selectmultipleimage;
+package com.don.selectmultipleimage.showimagedetail;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -7,12 +7,8 @@ import android.graphics.Point;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.don.selectmultipleimage.ImageBean;
+import com.don.selectmultipleimage.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -45,7 +44,7 @@ public class ImageActivity extends AppCompatActivity {
         for(int i=list.size() - 1; i>=0; i--){
             ImageBean item = new ImageBean();
             item.setImageName(list.get(i));
-            item.setImageUrl("file://"+list.get(i));
+            item.setImageUrl("file:///"+list.get(i));
             m.add(item);
         }
 
@@ -94,7 +93,7 @@ public class ImageActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            Log.v(TAG, TAG + " # mData.size()=" + mData.size());
+//            Log.v(TAG, TAG + " # mData.size()=" + mData.size());
             return mData.size();
         }
 
@@ -113,12 +112,17 @@ public class ImageActivity extends AppCompatActivity {
                 lp.height = width;
                 lp.width = width;
                 iv.setLayoutParams(lp);
-
+//                File file = new File(mData.get(position).getImageUrl());
+//                Log.v("path", mData.get(position).getImageUrl());
+//                Log.v("path", "file="+file.exists());
+//                ImageLoader.getInstance().displayImage(mData.get(position).getImageUrl(), iv, options);
+//                Picasso.with(mActivity).load(mData.get(position).getImageUrl()).resize(width, width).centerCrop().into(iv);
+                Glide.with(mActivity).load(mData.get(position).getImageUrl()).thumbnail(Glide.with(ImageActivity.this).load(R.mipmap.ic_launcher)).into(iv);
 //                if (iv.getTag() != null && iv.getTag().equals(bean.getImageUrl())) {
 //
 //                }else{
-                    ImageLoader.getInstance().displayImage(bean.getImageUrl(), iv, options);
-                    iv.setTag(bean.getImageUrl());
+//                    ImageLoader.getInstance().displayImage(bean.getImageUrl(), iv, options);
+//                    iv.setTag(bean.getImageUrl());
 //                }
 //                final String trName = "imageTransition" + position;
 //                ViewCompat.setTransitionName(iv, trName);

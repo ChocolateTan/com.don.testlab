@@ -21,10 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".SelectActivity"/>
-        <activity android:name=".ImageDetailActivity">
+        <activity android:name=".selectpic.SelectActivity"/>
+        <activity android:name=".showimagedetail.ImageDetailActivity">
         </activity>
-        <activity android:name=".ImageActivity">
+        <activity android:name=".showimagedetail.ImageActivity">
         </activity>
     </application>
 

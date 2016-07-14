@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,14 +13,14 @@ import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.don.selectmultipleimage.selectpic.SelectActivity;
+import com.don.selectmultipleimage.showimagedetail.ImageActivity;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -62,9 +61,10 @@ public class MainActivity extends AppCompatActivity {
                 .cacheInMemory(true)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-//                .showImageForEmptyUri(R.mipmap.photo_place_holder_image)
-//                .showImageOnFail(R.mipmap.photo_place_holder_image)
-//                .showImageOnLoading(R.mipmap.photo_place_holder_image)
+                .showImageForEmptyUri(R.mipmap.ic_launcher)
+                .showImageOnFail(R.mipmap.ic_launcher)
+                .showImageOnLoading(R.mipmap.ic_launcher)
+                .considerExifParams(true)
                 .build();
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(

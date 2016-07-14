@@ -1,4 +1,4 @@
-package com.don.selectmultipleimage;
+package com.don.selectmultipleimage.selectpic;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,9 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.don.selectmultipleimage.ImageBean;
+import com.don.selectmultipleimage.showimagedetail.ImageDetailActivity;
+import com.don.selectmultipleimage.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -78,7 +81,8 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         Log.i("image degree", mData.get(position).getImageUrl() + " # " + readPictureDegree(mData.get(position).getImageName()));
 //        viewHolder.ivImage.setTag(mData.get(position).getImageUrl());
-        ImageLoader.getInstance().displayImage(mData.get(position).getImageUrl(), viewHolder.ivImage, options);
+        ImageLoader.getInstance().displayImage(mData.get(position).getImageUrl(), viewHolder.ivImage);
+//        Picasso.with(mContext).load(mData.get(position).getImageUrl()).into(viewHolder.ivImage);
 //        viewHolder.ivImage.setImageResource(R.mipmap.ic_launcher);
         if (mData.get(position).getSelected() != 0) {
 

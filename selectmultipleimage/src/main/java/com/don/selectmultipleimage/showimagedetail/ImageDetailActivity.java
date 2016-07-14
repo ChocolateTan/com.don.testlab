@@ -1,23 +1,24 @@
-package com.don.selectmultipleimage;
+package com.don.selectmultipleimage.showimagedetail;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.don.selectmultipleimage.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 
 public class ImageDetailActivity extends AppCompatActivity {
 
@@ -41,12 +42,47 @@ public class ImageDetailActivity extends AppCompatActivity {
 //        trName = getIntent().getStringExtra(EXTRA_TRANSITIONNAME);
 
 //        ViewCompat.setTransitionName(iv, trName);
-        iv.post(new Runnable() {
-            @Override
-            public void run() {
-                ImageLoader.getInstance().displayImage(getIntent().getStringExtra(EXTRA_IMAGE), iv);
-            }
-        });
+//        iv.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                ImageLoader.getInstance().displayImage(getIntent().getStringExtra(EXTRA_IMAGE), iv);
+//            }
+//        });
+        Point point = new Point();
+        getWindowManager().getDefaultDisplay().getSize(point);
+        final ViewGroup.LayoutParams lp = iv.getLayoutParams();
+        lp.height = point.y;
+        lp.width = point.x;
+        iv.setLayoutParams(lp);
+
+//        final DisplayImageOptions options = new DisplayImageOptions.Builder()
+//                .cacheInMemory(true)
+//                .cacheOnDisk(true)
+//                .showImageOnLoading(R.mipmap.ic_launcher)
+//                .considerExifParams(true)
+//                .build();
+//
+//        iv.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                ImageLoader.getInstance().displayImage(getIntent().getStringExtra(EXTRA_IMAGE), iv, new ImageSize(lp.width, lp.height));
+//            }
+//        });
+
+//        DrawableRequestBuilder<String> thumbnailRequest = Glide
+//                .with( this)
+//                .load( R.mipmap.ic_launcher);
+//        Picasso.with(this).load(getIntent().getStringExtra(EXTRA_IMAGE)).resize(point.y, point.x).centerCrop().into(iv);
+//        iv.post(new Runnable() {
+//            @Override
+//            public void run() {
+//        DrawableRequestBuilder thumbnailRequest =
+        Glide.with(ImageDetailActivity.this).load(getIntent().getStringExtra(EXTRA_IMAGE)).thumbnail(
+                Glide.with(this).load(R.mipmap.ic_launcher))
+                .into(iv);
+//            }
+//        });
+
 //        ImageLoader.getInstance().displayImage(getIntent().getStringExtra(EXTRA_IMAGE), iv, new ImageLoadingListener() {
 //            @Override
 //            public void onLoadingStarted(String imageUri, View view) {
@@ -76,10 +112,13 @@ public class ImageDetailActivity extends AppCompatActivity {
         ActivityOptionsCompat options =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(
                         activity, transitionView, "myicon");
+//        ActivityOptionsCompat options = ActivityOptionsCompat.makeThumbnailScaleUpAnimation(transitionView, ((BitmapDrawable)((ImageView)transitionView).getDrawable()).getBitmap(), 0, 0);
+//        ActivityOptionsCompat options = ActivityOptionsCompat.makeCustomAnimation(activity, android.R.anim.fade_in, android.R.anim.fade_out);
         Intent intent = new Intent(activity, ImageDetailActivity.class);
         intent.putExtra(EXTRA_IMAGE, url);
 //        intent.putExtra(EXTRA_TRANSITIONNAME, transitionName);
         ActivityCompat.startActivity(activity, intent, options.toBundle());
+//        activity.startActivity(intent);
     }
     private void scheduleStartPostponedTransition(final View sharedElement) {
         sharedElement.getViewTreeObserver().addOnPreDrawListener(
