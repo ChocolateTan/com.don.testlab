@@ -1,1 +1,1 @@
-include ':app', ':selectmultipleimage', ':nodelist', ':flowlayout', ':javadelegate', ':cameraphotosave', ':checkclipboardliketaobao'
+include ':app', ':selectmultipleimage', ':nodelist', ':flowlayout', ':javadelegate', ':cameraphotosave', ':checkclipboardliketaobao', ':animationtest'
