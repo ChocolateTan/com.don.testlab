@@ -1,5 +1,6 @@
 package com.example.animationtest;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.support.v7.app.AppCompatActivity;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void vauleAnimationTest(){
-
+        AnimatorSet animatorSet = new AnimatorSet();
         ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 400);
         valueAnimator.setDuration(1000);
 
@@ -63,17 +64,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 int curValue = (int)animation.getAnimatedValue();
-                Log.v("test", " # curValue=" + curValue);
+//                Log.v("test", " # curValue=" + curValue);
                 //45度移動
-                //iv.layout(oldLeft + curValue, oldTop + curValue, oldLeft + curValue + iv.getWidth(), oldTop + curValue + iv.getHeight());
-                //垂直移動
-                //iv.layout(oldLeft, oldTop + curValue, oldLeft + iv.getWidth(), oldTop + curValue + iv.getHeight());
-                //放大
-                //iv.layout(oldLeft, oldTop, oldLeft + curValue / 100 + iv.getWidth(), oldTop + curValue / 100 + iv.getHeight());
-                //縮小
-                iv.layout(oldLeft + curValue + 1, oldTop + curValue + 1, oldLeft + iv.getWidth()+ curValue, oldTop + iv.getHeight()+ curValue);
+                iv.layout(oldLeft + curValue, oldTop + curValue, oldLeft + curValue + iv.getWidth(), oldTop + curValue + iv.getHeight());
+//                //垂直移動
+//                iv.layout(oldLeft, oldTop + curValue, oldLeft + iv.getWidth(), oldTop + curValue + iv.getHeight());
+//                //放大
+//                iv.layout(oldLeft, oldTop, oldLeft + curValue / 100 + iv.getWidth(), oldTop + curValue / 100 + iv.getHeight());
+//                //縮小
+//                iv.layout(oldLeft + curValue + 1, oldTop + curValue + 1, oldLeft + iv.getWidth()+ curValue, oldTop + iv.getHeight()+ curValue);
             }
         });
-        valueAnimator.start();
+        ValueAnimator valueAnimatorRotation = ValueAnimator.ofInt(0, 360);
+        valueAnimatorRotation.setDuration(1000);
+        valueAnimatorRotation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int curValue = (int)animation.getAnimatedValue();
+                iv.setRotation(curValue);
+            }
+        });
+
+        animatorSet.playTogether(valueAnimator, valueAnimatorRotation);
+        animatorSet.start();
+//        valueAnimator.start();
     }
 }
