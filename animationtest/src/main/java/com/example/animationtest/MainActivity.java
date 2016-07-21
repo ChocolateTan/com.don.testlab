@@ -3,13 +3,17 @@ package com.example.animationtest;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.IntEvaluator;
+import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnimationSet;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,12 +32,13 @@ public class MainActivity extends AppCompatActivity {
     private int width;
     private int height;
     private ViewGroup.LayoutParams lp;
+    private boolean isMenuOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        initFloatButton();
         iv = (ImageView) findViewById(R.id.iv_img);
         iv.post(new Runnable() {
 
@@ -55,9 +60,10 @@ public class MainActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                vauleAnimationTest();
+                vauleAnimationTest();
 //                testChangeShape();
 //                testChangeShape();
+//                testRingIcon();
             }
         });
 
@@ -88,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 //45度移動
                 iv.layout(oldLeft + curValue, oldTop + curValue, oldLeft + curValue + iv.getWidth(), oldTop + curValue + iv.getHeight());
 //                //垂直移動
-//                iv.layout(oldLeft, oldTop + curValue, oldLeft + iv.getWidth(), oldTop + curValue + iv.getHeight());
+//                findViewById(R.id.ftn_menu).layout(oldLeft, oldTop + curValue, oldLeft + findViewById(R.id.ftn_menu).getWidth(), oldTop + curValue + findViewById(R.id.ftn_menu).getHeight());
 //                //放大
 //                iv.layout(oldLeft, oldTop, oldLeft + curValue / 100 + iv.getWidth(), oldTop + curValue / 100 + iv.getHeight());
 //                //縮小
@@ -120,7 +126,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        animatorSet.play(valueAnimatorSwitch);
+        animatorSet.play(valueAnimator);
+//        animatorSet.play(valueAnimatorSwitch);
         animatorSet.start();
 //        valueAnimator.start();
     }
@@ -148,5 +155,175 @@ public class MainActivity extends AppCompatActivity {
         valueAnimator.start();
 
 
+    }
+
+    private void testRingIcon(){
+//        PropertyValuesHolder rotationHolder = PropertyValuesHolder.ofFloat("Rotation", 60f, -60f, 40f, -40f, -20f, 20f, 10f, -10f, 0f);
+//        ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(iv, rotationHolder);
+//        animator.setDuration(3000);
+//        animator.setInterpolator(new AccelerateInterpolator());
+//        animator.start();
+
+        Keyframe frame0 = Keyframe.ofFloat(0f, 0);
+        Keyframe frame1 = Keyframe.ofFloat(0.25f, -40f);
+        Keyframe frame3 = Keyframe.ofFloat(0.50f, 40f);
+        Keyframe frame2 = Keyframe.ofFloat(1, 0);
+        PropertyValuesHolder frameHolder = PropertyValuesHolder.ofKeyframe("rotation",frame0,frame1,frame3, frame2);
+        Animator animator = ObjectAnimator.ofPropertyValuesHolder(iv,frameHolder);
+        animator.setDuration(3000);
+        animator.start();
+    }
+
+    private void initFloatButton(){
+        final FloatingActionButton ft = (FloatingActionButton) findViewById(R.id.ftn_menu);
+        final FloatingActionButton ft1 = (FloatingActionButton) findViewById(R.id.ftn_menu1);
+        final FloatingActionButton ft2 = (FloatingActionButton) findViewById(R.id.ftn_menu2);
+        final FloatingActionButton ft3 = (FloatingActionButton) findViewById(R.id.ftn_menu3);
+        final FloatingActionButton ft4 = (FloatingActionButton) findViewById(R.id.ftn_menu4);
+        final FloatingActionButton ft5 = (FloatingActionButton) findViewById(R.id.ftn_menu5);
+
+        ft1.setVisibility(View.GONE);
+        ft2.setVisibility(View.GONE);
+        ft3.setVisibility(View.GONE);
+        ft4.setVisibility(View.GONE);
+        ft5.setVisibility(View.GONE);
+
+        ft1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "click 1", Toast.LENGTH_SHORT).show();
+            }
+        });
+        ft2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "click 2", Toast.LENGTH_SHORT).show();
+            }
+        });
+        ft3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "click 3", Toast.LENGTH_SHORT).show();
+            }
+        });
+        ft4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "click 4", Toast.LENGTH_SHORT).show();
+            }
+        });
+        ft5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "click 5", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        ft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("test", "onClick");
+                if(!isMenuOpen) {
+                    doAnimation(ft1, 0, 500);
+                    doAnimation(ft2, (int) (22.5 * 1), 500);
+                    doAnimation(ft3, (int) (22.5 * 2), 500);
+                    doAnimation(ft4, (int) (22.5 * 3), 500);
+                    doAnimation(ft5, (int) (22.5 * 4), 500);
+                }else{
+                    doAnimationClose(ft1, 0, 500);
+                    doAnimationClose(ft2, (int) (22.5 * 1), 500);
+                    doAnimationClose(ft3, (int) (22.5 * 2), 500);
+                    doAnimationClose(ft4, (int) (22.5 * 3), 500);
+                    doAnimationClose(ft5, (int) (22.5 * 4), 500);
+                }
+            }
+        });
+    }
+
+    private void doAnimation(final View view, final int degree, final int l){
+
+        final int viewLeft = view.getLeft();
+        final int viewTop = view.getTop();
+
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, l);
+        valueAnimator.setDuration(500);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int current = (int) animation.getAnimatedValue();
+                int currentX = (int) (Math.sin(degree*Math.PI/180) * current);
+                int currentY = (int) (Math.cos(degree*Math.PI/180) * current);
+                view.layout(viewLeft - currentX, viewTop - currentY, viewLeft + view.getWidth() - currentX, (viewTop - currentY + view.getHeight()));
+            }
+        });
+        valueAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                view.setVisibility(View.VISIBLE);
+                view.setClickable(false);
+                findViewById(R.id.ftn_menu).setClickable(false);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                findViewById(R.id.ftn_menu).setClickable(true);
+                view.setClickable(true);
+                isMenuOpen = true;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        valueAnimator.start();
+    }
+
+    private void doAnimationClose(final View view, final int degree, final int l){
+        final int viewLeft = view.getLeft();
+        final int viewTop = view.getTop();
+
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, l);
+        valueAnimator.setDuration(500);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int current = (int) animation.getAnimatedValue();
+                int currentX = (int) (Math.sin(degree*Math.PI/180) * current);
+                int currentY = (int) (Math.cos(degree*Math.PI/180) * current);
+                view.layout(viewLeft + currentX, viewTop + currentY, viewLeft + view.getWidth() + currentX, (viewTop + currentY + view.getHeight()));
+            }
+        });
+        valueAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                view.setClickable(false);
+                findViewById(R.id.ftn_menu).setClickable(false);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                view.setClickable(true);
+                view.setVisibility(View.GONE);
+                findViewById(R.id.ftn_menu).setClickable(true);
+                isMenuOpen = false;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        valueAnimator.start();
     }
 }
